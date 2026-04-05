@@ -1,201 +1,95 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rede Segura Galdino</title>
+  <meta charset="UTF-8">
+  <title>Fazer denúncia - Rede Segura Galdino</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #f5f7fb 0%, #eaf1ff 100%);
-      color: #1f2a44;
+      background: #f4f6fb;
+      margin: 0;
+      padding: 0;
     }
 
     .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 48px 24px;
-    }
-
-    .hero {
+      max-width: 600px;
+      margin: 40px auto;
       background: white;
-      border-radius: 24px;
-      padding: 48px 32px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-      text-align: center;
-    }
-
-    .tag {
-      display: inline-block;
-      background: #dbeafe;
-      color: #1d4ed8;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 20px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     }
 
     h1 {
-      font-size: 42px;
-      margin: 0 0 16px;
-      color: #2563eb;
-    }
-
-    .subtitle {
-      font-size: 20px;
-      line-height: 1.6;
-      color: #334155;
-      margin: 0 auto 28px;
-      max-width: 700px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
-
-    .btn {
-      display: inline-block;
-      text-decoration: none;
-      padding: 14px 24px;
-      border-radius: 14px;
-      font-weight: bold;
-      transition: 0.2s ease;
-    }
-
-    .btn-primary {
-      background: #2563eb;
-      color: white;
-    }
-
-    .btn-primary:hover {
-      background: #1d4ed8;
-    }
-
-    .btn-secondary {
-      background: #e2e8f0;
-      color: #1e293b;
-    }
-
-    .btn-secondary:hover {
-      background: #cbd5e1;
-    }
-
-    .section {
-      margin-top: 36px;
-      background: white;
-      border-radius: 24px;
-      padding: 32px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
-    }
-
-    .section h2 {
-      margin-top: 0;
-      color: #1e3a8a;
-    }
-
-    .section p {
-      line-height: 1.7;
-      color: #334155;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-
-    .card {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 20px;
-    }
-
-    .card h3 {
-      margin-top: 0;
-      color: #2563eb;
-    }
-
-    footer {
+      color: #2d5bff;
       text-align: center;
-      color: #64748b;
-      padding: 32px 16px 12px;
-      font-size: 14px;
     }
 
-    @media (max-width: 640px) {
-      h1 {
-        font-size: 32px;
-      }
-
-      .subtitle {
-        font-size: 18px;
-      }
-
-      .hero,
-      .section {
-        padding: 28px 20px;
-      }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
     }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #2d5bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #1c3fd6;
+    }
+
+    .voltar {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #555;
+      text-decoration: none;
+    }
+
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <section class="hero">
-      <div class="tag">Canal escolar de escuta e proteção</div>
-      <h1>Rede Segura Galdino</h1>
-      <p class="subtitle">
-        Um espaço digital de acolhimento, escuta e encaminhamento de situações
-        de bullying e cyberbullying no ambiente escolar.
-      </p>
 
-      <div class="buttons">
-        <a href="#" class="btn btn-primary">Fazer denúncia</a>
-        <a href="#" class="btn btn-secondary">Área da equipe</a>
-      </div>
-    </section>
+<div class="container">
+  <h1>Fazer denúncia</h1>
 
-    <section class="section">
-      <h2>Sobre o projeto</h2>
-      <p>
-        A Rede Segura Galdino foi pensada para oferecer aos estudantes um meio
-        acessível e seguro de relatar situações de violência, constrangimento,
-        exposição ou cyberbullying, permitindo escuta qualificada e
-        encaminhamento responsável pela equipe escolar.
-      </p>
+  <form>
+    <label>Seu nome (opcional)</label>
+    <input type="text">
 
-      <div class="grid">
-        <div class="card">
-          <h3>Escuta segura</h3>
-          <p>Canal simples, acessível e acolhedor para relatar situações vividas ou presenciadas.</p>
-        </div>
+    <label>Tipo de situação</label>
+    <input type="text" placeholder="Bullying, cyberbullying, ameaça...">
 
-        <div class="card">
-          <h3>Encaminhamento</h3>
-          <p>Os relatos são organizados para análise e encaminhamento pela equipe responsável.</p>
-        </div>
+    <label>Descreva o que aconteceu</label>
+    <textarea rows="5"></textarea>
 
-        <div class="card">
-          <h3>Proteção</h3>
-          <p>Informações sensíveis podem ser tratadas em área restrita, com maior nível de sigilo.</p>
-        </div>
-      </div>
-    </section>
-  </div>
+    <label>Anexar imagem (opcional)</label>
+    <input type="file">
 
-  <footer>
-    Rede Segura Galdino • Projeto escolar em desenvolvimento
-  </footer>
+    <button type="submit">Enviar denúncia</button>
+  </form>
+
+  <a href="index.html" class="voltar">← Voltar para o início</a>
+
+</div>
+
 </body>
 </html>
