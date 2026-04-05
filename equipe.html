@@ -147,6 +147,17 @@
         padding: 18px;
       }
     }
+    <div class="filtro">
+  <label>Filtrar por status:</label>
+  <select id="filtroStatus">
+    <option value="todos">Todos</option>
+    <option value="novo">Novo</option>
+    <option value="em análise">Em análise</option>
+    <option value="encaminhado">Encaminhado</option>
+    <option value="resolvido">Resolvido</option>
+    <option value="não resolvido">Não resolvido</option>
+  </select>
+</div>
     .container-relatos {
   max-width: 900px;
   margin: 40px auto;
@@ -199,6 +210,19 @@
 .status-nao-resolvido {
   background: #fee2e2;
   color: #991b1b;
+}
+    .filtro {
+  max-width: 900px;
+  margin: 20px auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.filtro select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
 }
   </style>
 </head>
@@ -416,7 +440,18 @@ botaoSalvar.addEventListener("click", async () => {
           return;
         }
 
-       snapshot.forEach((documento) => {
+       const filtro = document.getElementById("filtroStatus").value;
+
+snapshot.forEach((documento) => {
+  const relato = documento.data();
+
+  if (filtro !== "todos" && relato.status !== filtro) {
+    return;
+  }
+
+  const card = criarCard(relato, documento.id);
+  listaRelatos.appendChild(card);
+});
   const relato = documento.data();
   const card = criarCard(relato, documento.id);
   listaRelatos.appendChild(card);
@@ -432,6 +467,7 @@ botaoSalvar.addEventListener("click", async () => {
 
    
     carregarRelatos();
+    document.getElementById("filtroStatus").addEventListener("change", carregarRelatos);
   </script>
 </body>
 </html>
