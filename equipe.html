@@ -213,10 +213,15 @@
       local.innerHTML = `<span class="label">Onde aconteceu:</span> ${relato.local || "Não informado"}`;
       card.appendChild(local);
 
-      const descricao = document.createElement("div");
-      descricao.className = "linha";
-      descricao.innerHTML = `<span class="label">Descrição:</span> ${relato.descricao || "Sem descrição"}`;
-      card.appendChild(descricao);
+    const tempo = document.createElement("div");
+tempo.className = "linha";
+tempo.innerHTML = `<span class="label">Quando aconteceu ou quando soube:</span> ${relato.tempo || "Não informado"}`;
+card.appendChild(tempo);
+
+const recorrencia = document.createElement("div");
+recorrencia.className = "linha";
+recorrencia.innerHTML = `<span class="label">Recorrência:</span> ${relato.recorrencia || "Não informado"}`;
+card.appendChild(recorrencia);
 
       const status = document.createElement("div");
       status.className = "linha";
