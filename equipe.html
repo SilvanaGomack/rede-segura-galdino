@@ -205,6 +205,19 @@
   });
 </script>
   <script type="module"> 
+    <script>
+const senhaCorreta = "equipe123";
+
+document.getElementById("btnEntrarEquipe").addEventListener("click", function() {
+  const senhaDigitada = document.getElementById("senhaEquipeInput").value;
+
+  if (senhaDigitada === senhaCorreta) {
+    document.getElementById("bloqueioEquipe").style.display = "none";
+  } else {
+    document.getElementById("erroSenhaEquipe").style.display = "block";
+  }
+});
+</script>
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
    import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
