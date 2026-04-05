@@ -168,7 +168,26 @@
         <option>Exposição indevida</option>
         <option>Outro</option>
       </select>
+<label for="tempo">Quando isso aconteceu ou quando você soube?</label>
+<select id="tempo" name="tempo" required>
+  <option value="">Selecione uma opção</option>
+  <option>Hoje</option>
+  <option>Ontem</option>
+  <option>Nesta semana</option>
+  <option>Há alguns dias</option>
+  <option>Há cerca de uma semana</option>
+  <option>Há cerca de 15 dias</option>
+  <option>Há mais tempo</option>
+  <option>Não sei informar</option>
+</select>
 
+<label for="recorrencia">Essa situação já aconteceu outras vezes?</label>
+<select id="recorrencia" name="recorrencia" required>
+  <option value="">Selecione uma opção</option>
+  <option>Não, foi a primeira vez</option>
+  <option>Sim, já aconteceu outras vezes</option>
+  <option>Não sei informar</option>
+</select>
       <label for="local">Onde aconteceu?</label>
       <input type="text" id="local" name="local" placeholder="Sala, pátio, grupo de WhatsApp, Instagram...">
 
@@ -221,20 +240,23 @@
       btnEnviar.textContent = "Enviando...";
 
       const nome = document.getElementById("nome").value.trim();
-      const tipo = document.getElementById("tipo").value.trim();
-      const local = document.getElementById("local").value.trim();
-      const descricao = document.getElementById("descricao").value.trim();
-
+const tipo = document.getElementById("tipo").value.trim();
+const tempo = document.getElementById("tempo").value.trim();
+const recorrencia = document.getElementById("recorrencia").value.trim();
+const local = document.getElementById("local").value.trim();
+const descricao = document.getElementById("descricao").value.trim();
       try {
-        await addDoc(collection(db, "denuncias"), {
-          nome: nome || "Não identificado",
-          tipo,
-          local,
-          descricao,
-          status: "novo",
-          origem: "site_publico",
-          createdAt: serverTimestamp()
-        });
+      await addDoc(collection(db, "denuncias"), {
+  nome: nome || "Não identificado",
+  tipo,
+  tempo,
+  recorrencia,
+  local,
+  descricao,
+  status: "novo",
+  origem: "site_publico",
+  createdAt: serverTimestamp()
+});
 
         form.reset();
         mensagem.textContent = "Relato enviado com sucesso. A equipe responsável poderá analisar a situação.";
