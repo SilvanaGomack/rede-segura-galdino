@@ -150,34 +150,59 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="topo">
-      <h1>Área da equipe</h1>
-      <p>
-        Visualização inicial dos relatos enviados pelo formulário da Rede Segura Galdino.
-      </p>
+  <div id="bloqueioEquipe" style="position: fixed; inset: 0; background: rgba(15, 23, 42, 0.75); display: flex; align-items: center; justify-content: center; z-index: 9999;">
+  <div style="background: white; width: 90%; max-width: 420px; padding: 28px; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+    
+    <h2 style="margin-top: 0; color: #2563eb;">Área da equipe</h2>
+    <p style="color: #475569;">Digite a senha para acessar.</p>
 
-      <div class="acoes">
-        <button class="botao botao-primario" id="btnAtualizar">Atualizar relatos</button>
-        <a class="botao botao-secundario" href="index.html">Voltar para o início</a>
-      </div>
-    </div>
+    <input type="password" id="senhaEquipeInput" placeholder="Digite a senha"
+      style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; margin: 12px 0;">
 
+    <button id="btnEntrarEquipe"
+      style="width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 12px; cursor: pointer;">
+      Entrar
+    </button>
+
+    <p id="erroSenhaEquipe" style="color: red; display: none;">Senha incorreta</p>
+
+  </div>
+</div>
     <div id="mensagem" class="mensagem"></div>
 
     <div id="carregando" class="carregando">Carregando relatos...</div>
     <div id="listaRelatos" class="lista"></div>
   </div>
 <script>
-setTimeout(() => {
-  const senhaEquipe = "equipe123";
-  const senhaInformada = prompt("Área restrita da equipe. Digite a senha:");
+  const senhaEquipeCorreta = "equipe123";
 
-  if (!senhaInformada || senhaInformada !== senhaEquipe) {
-    alert("Acesso negado.");
-    window.location.href = "index.html";
+  function liberarEquipe() {
+    document.getElementById("bloqueioEquipe").style.display = "none";
   }
-}, 300);
+
+  function validarSenhaEquipe() {
+    const senha = document.getElementById("senhaEquipeInput").value;
+    const erro = document.getElementById("erroSenhaEquipe");
+
+    if (senha === senhaEquipeCorreta) {
+      liberarEquipe();
+    } else {
+      erro.style.display = "block";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const botao = document.getElementById("btnEntrarEquipe");
+    const input = document.getElementById("senhaEquipeInput");
+
+    botao.addEventListener("click", validarSenhaEquipe);
+
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        validarSenhaEquipe();
+      }
+    });
+  });
 </script>
   <script type="module"> 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
