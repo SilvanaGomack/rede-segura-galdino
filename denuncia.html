@@ -256,6 +256,7 @@ const tempo = document.getElementById("tempo").value.trim();
 const recorrencia = document.getElementById("recorrencia").value.trim();
 const local = document.getElementById("local").value.trim();
 const descricao = document.getElementById("descricao").value.trim();
+const link = document.getElementById("linkProva").value.trim();
       try {
       await addDoc(collection(db, "denuncias"), {
   nome: nome || "Não identificado",
@@ -264,6 +265,7 @@ const descricao = document.getElementById("descricao").value.trim();
   recorrencia,
   local,
   descricao,
+  link,
   status: "novo",
   origem: "site_publico",
   createdAt: serverTimestamp()
