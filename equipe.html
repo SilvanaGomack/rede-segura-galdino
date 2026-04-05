@@ -429,30 +429,29 @@ botaoSalvar.addEventListener("click", async () => {
       carregando.style.display = "block";
       carregando.textContent = "Carregando relatos...";
 
-      try {
-        const q = query(collection(db, "denuncias"), orderBy("createdAt", "desc"));
-        const snapshot = await getDocs(q);
+try {
+  const q = query(collection(db, "denuncias"), orderBy("createdAt", "desc"));
+  const snapshot = await getDocs(q);
 
-        carregando.style.display = "none";
+  carregando.style.display = "none";
 
-        if (snapshot.empty) {
-          listaRelatos.innerHTML = `<div class="vazio">Nenhum relato encontrado até o momento.</div>`;
-          return;
-        }
-
-       const filtro = document.getElementById("filtroStatus").value;
-
-snapshot.forEach((documento) => {
-  const relato = documento.data();
-
-  if (filtro !== "todos" && relato.status !== filtro) {
+  if (snapshot.empty) {
+    listaRelatos.innerHTML = `<div class="vazio">Nenhum relato encontrado até o momento.</div>`;
     return;
   }
 
-  const card = criarCard(relato, documento.id);
-  listaRelatos.appendChild(card);
-});
+  const filtro = document.getElementById("filtroStatus").value;
 
+  snapshot.forEach((documento) => {
+    const relato = documento.data();
+
+    if (filtro !== "todos" && relato.status !== filtro) {
+      return;
+    }
+
+    const card = criarCard(relato, documento.id);
+    listaRelatos.appendChild(card);
+  });
       } catch (error) {
         console.error("Erro ao carregar relatos:", error);
         carregando.style.display = "none";
