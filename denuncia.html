@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fazer denúncia - Rede Segura Galdino</title>
+  <title>Relatar situação - Rede Segura Galdino</title>
   <style>
     * {
       box-sizing: border-box;
@@ -115,6 +115,29 @@
       font-size: 14px;
     }
 
+    .mensagem {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      display: none;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .mensagem.sucesso {
+      display: block;
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .mensagem.erro {
+      display: block;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
     @media (max-width: 640px) {
       .container {
         margin: 20px;
@@ -131,12 +154,12 @@
       Este espaço foi criado para acolher relatos e encaminhar situações de bullying e cyberbullying no ambiente escolar.
     </p>
 
-    <form>
+    <form id="formDenuncia">
       <label for="nome">Seu nome (opcional)</label>
       <input type="text" id="nome" name="nome" placeholder="Digite seu nome, se quiser se identificar">
 
       <label for="tipo">Tipo de situação</label>
-      <select id="tipo" name="tipo">
+      <select id="tipo" name="tipo" required>
         <option value="">Selecione uma opção</option>
         <option>Bullying</option>
         <option>Cyberbullying</option>
@@ -150,21 +173,83 @@
       <input type="text" id="local" name="local" placeholder="Sala, pátio, grupo de WhatsApp, Instagram...">
 
       <label for="descricao">Descreva o que aconteceu</label>
-      <textarea id="descricao" name="descricao" placeholder="Conte o que aconteceu com o máximo de detalhes possível"></textarea>
+      <textarea id="descricao" name="descricao" placeholder="Conte o que aconteceu com o máximo de detalhes possível" required></textarea>
 
       <label for="arquivo">Anexar imagem (opcional)</label>
-      <input type="file" id="arquivo" name="arquivo">
-      <div class="hint">Você poderá anexar print, foto ou imagem relacionada ao caso.</div>
+      <input type="file" id="arquivo" name="arquivo" disabled>
+      <div class="hint">O envio de imagem será conectado na próxima etapa. Primeiro vamos salvar o relato.</div>
 
       <div class="buttons">
-        <button type="submit">Enviar relato</button>
+        <button type="submit" id="btnEnviar">Enviar relato</button>
         <a class="voltar" href="index.html">Voltar para o início</a>
       </div>
     </form>
 
+    <div id="mensagem" class="mensagem"></div>
+
     <div class="alerta">
-      Esta é uma etapa inicial do projeto. O envio ainda será conectado ao sistema interno da equipe responsável.
+      Os dados enviados por este formulário serão encaminhados à equipe responsável para escuta e acolhimento.
     </div>
   </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "COLE_AQUI_SUA_API_KEY",
+      authDomain: "studio-1530165856-a9693.firebaseapp.com",
+      projectId: "studio-1530165856-a9693",
+      storageBucket: "studio-1530165856-a9693.firebasestorage.app",
+      messagingSenderId: "889720942642",
+      appId: "1:889720942642:web:ae0fb66c78336637110c2b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("formDenuncia");
+    const mensagem = document.getElementById("mensagem");
+    const btnEnviar = document.getElementById("btnEnviar");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      mensagem.className = "mensagem";
+      mensagem.style.display = "none";
+      btnEnviar.disabled = true;
+      btnEnviar.textContent = "Enviando...";
+
+      const nome = document.getElementById("nome").value.trim();
+      const tipo = document.getElementById("tipo").value.trim();
+      const local = document.getElementById("local").value.trim();
+      const descricao = document.getElementById("descricao").value.trim();
+
+      try {
+        await addDoc(collection(db, "denuncias"), {
+          nome: nome || "Não identificado",
+          tipo,
+          local,
+          descricao,
+          status: "novo",
+          origem: "site_publico",
+          createdAt: serverTimestamp()
+        });
+
+        form.reset();
+        mensagem.textContent = "Relato enviado com sucesso. A equipe responsável poderá analisar a situação.";
+        mensagem.className = "mensagem sucesso";
+        mensagem.style.display = "block";
+      } catch (error) {
+        console.error("Erro ao salvar relato:", error);
+        mensagem.textContent = "Não foi possível enviar agora. Verifique as regras do Firestore e tente novamente.";
+        mensagem.className = "mensagem erro";
+        mensagem.style.display = "block";
+      } finally {
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = "Enviar relato";
+      }
+    });
+  </script>
 </body>
 </html>
