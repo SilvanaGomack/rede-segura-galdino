@@ -169,14 +169,15 @@
     <div id="listaRelatos" class="lista"></div>
   </div>
 <script>
+setTimeout(() => {
   const senhaEquipe = "equipe123";
-
   const senhaInformada = prompt("Área restrita da equipe. Digite a senha:");
 
-  if (senhaInformada !== senhaEquipe) {
+  if (!senhaInformada || senhaInformada !== senhaEquipe) {
     alert("Acesso negado.");
     window.location.href = "index.html";
   }
+}, 300);
 </script>
   <script type="module"> 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
