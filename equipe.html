@@ -238,7 +238,6 @@ document.getElementById("btnEntrarEquipe").addEventListener("click", function() 
     const listaRelatos = document.getElementById("listaRelatos");
     const carregando = document.getElementById("carregando");
     const mensagem = document.getElementById("mensagem");
-    const btnAtualizar = document.getElementById("btnAtualizar");
 
     function formatarData(timestamp) {
       if (!timestamp || !timestamp.toDate) return "Data não disponível";
@@ -361,8 +360,7 @@ botaoSalvar.addEventListener("click", async () => {
       }
     }
 
-    btnAtualizar.addEventListener("click", carregarRelatos);
-
+   
     carregarRelatos();
   </script>
 </body>
