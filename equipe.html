@@ -180,7 +180,7 @@
 </script>
   <script type="module"> 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+   import { getFirestore, collection, getDocs, query, orderBy, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAkpxFTUX3sFJIm_nNlrusSUeikI15HK0M",
@@ -204,7 +204,7 @@
       return timestamp.toDate().toLocaleString("pt-BR");
     }
 
-    function criarCard(relato) {
+   function criarCard(relato, docId) {
       const card = document.createElement("div");
       card.className = "card";
 
@@ -232,11 +232,54 @@ recorrencia.className = "linha";
 recorrencia.innerHTML = `<span class="label">Recorrência:</span> ${relato.recorrencia || "Não informado"}`;
 card.appendChild(recorrencia);
 
-      const status = document.createElement("div");
-      status.className = "linha";
-      status.innerHTML = `<span class="label">Status:</span> ${relato.status || "novo"}`;
-      card.appendChild(status);
+      const statusLabel = document.createElement("div");
+statusLabel.className = "linha";
+statusLabel.innerHTML = `<span class="label">Status atual:</span> ${relato.status || "novo"}`;
+card.appendChild(statusLabel);
 
+const statusEdicao = document.createElement("div");
+statusEdicao.className = "linha";
+statusEdicao.innerHTML = `
+  <span class="label">Alterar status:</span><br>
+  <select class="status-select">
+    <option value="novo" ${relato.status === "novo" ? "selected" : ""}>novo</option>
+    <option value="em análise" ${relato.status === "em análise" ? "selected" : ""}>em análise</option>
+    <option value="encaminhado" ${relato.status === "encaminhado" ? "selected" : ""}>encaminhado</option>
+    <option value="resolvido" ${relato.status === "resolvido" ? "selected" : ""}>resolvido</option>
+    <option value="não resolvido" ${relato.status === "não resolvido" ? "selected" : ""}>não resolvido</option>
+  </select>
+`;
+card.appendChild(statusEdicao);
+
+const acoes = document.createElement("div");
+acoes.className = "linha";
+acoes.innerHTML = `
+  <span class="label">Ações tomadas:</span><br>
+  <textarea class="acoes-texto" placeholder="Ex.: conversado com aluno, encaminhado à orientação, reunião com responsáveis...">${relato.acoesTomadas || ""}</textarea>
+`;
+card.appendChild(acoes);
+
+const botaoSalvar = document.createElement("button");
+botaoSalvar.textContent = "Salvar atualização";
+botaoSalvar.className = "botao botao-primario";
+card.appendChild(botaoSalvar);
+botaoSalvar.addEventListener("click", async () => {
+  const novoStatus = card.querySelector(".status-select").value;
+  const novasAcoes = card.querySelector(".acoes-texto").value.trim();
+
+  try {
+    await updateDoc(doc(db, "denuncias", docId), {
+      status: novoStatus,
+      acoesTomadas: novasAcoes
+    });
+
+    alert("Atualização salva com sucesso.");
+    carregarRelatos();
+  } catch (error) {
+    console.error("Erro ao atualizar relato:", error);
+    alert("Não foi possível salvar a atualização.");
+  }
+});
       const data = document.createElement("div");
       data.className = "linha";
       data.innerHTML = `<span class="label">Enviado em:</span> ${formatarData(relato.createdAt)}`;
@@ -263,11 +306,11 @@ card.appendChild(recorrencia);
           return;
         }
 
-        snapshot.forEach((doc) => {
-          const relato = doc.data();
-          const card = criarCard(relato);
-          listaRelatos.appendChild(card);
-        });
+       snapshot.forEach((documento) => {
+  const relato = documento.data();
+  const card = criarCard(relato, documento.id);
+  listaRelatos.appendChild(card);
+});
       } catch (error) {
         console.error("Erro ao carregar relatos:", error);
         carregando.style.display = "none";
