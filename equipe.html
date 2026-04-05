@@ -147,17 +147,7 @@
         padding: 18px;
       }
     }
-    <div class="filtro">
-  <label>Filtrar por status:</label>
-  <select id="filtroStatus">
-    <option value="todos">Todos</option>
-    <option value="novo">Novo</option>
-    <option value="em análise">Em análise</option>
-    <option value="encaminhado">Encaminhado</option>
-    <option value="resolvido">Resolvido</option>
-    <option value="não resolvido">Não resolvido</option>
-  </select>
-</div>
+   
     .container-relatos {
   max-width: 900px;
   margin: 40px auto;
@@ -247,7 +237,18 @@
 </div>
     <div id="mensagem" class="mensagem"></div>
 
-    <div id="carregando" class="carregando">Carregando relatos...</div>
+    <div id="carregando" class="carregando">Carregando relatos...</div> 
+  <div class="filtro">
+  <label for="filtroStatus">Filtrar por status:</label>
+  <select id="filtroStatus">
+    <option value="todos">Todos</option>
+    <option value="novo">Novo</option>
+    <option value="em análise">Em análise</option>
+    <option value="encaminhado">Encaminhado</option>
+    <option value="resolvido">Resolvido</option>
+    <option value="não resolvido">Não resolvido</option>
+  </select>
+</div>
     <div class="container-relatos">
     <h2>Painel de Relatos</h2>
 
