@@ -168,8 +168,17 @@
     <div id="carregando" class="carregando">Carregando relatos...</div>
     <div id="listaRelatos" class="lista"></div>
   </div>
+<script>
+  const senhaEquipe = "equipe123";
 
-  <script type="module">
+  const senhaInformada = prompt("Área restrita da equipe. Digite a senha:");
+
+  if (senhaInformada !== senhaEquipe) {
+    alert("Acesso negado.");
+    window.location.href = "index.html";
+  }
+</script>
+  <script type="module"> 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
