@@ -452,10 +452,7 @@ snapshot.forEach((documento) => {
   const card = criarCard(relato, documento.id);
   listaRelatos.appendChild(card);
 });
-  const relato = documento.data();
-  const card = criarCard(relato, documento.id);
-  listaRelatos.appendChild(card);
-});
+
       } catch (error) {
         console.error("Erro ao carregar relatos:", error);
         carregando.style.display = "none";
@@ -465,7 +462,6 @@ snapshot.forEach((documento) => {
       }
     }
 
-   
     carregarRelatos();
     document.getElementById("filtroStatus").addEventListener("change", carregarRelatos);
   </script>
