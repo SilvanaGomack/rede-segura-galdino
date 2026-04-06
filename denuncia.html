@@ -157,7 +157,10 @@
     <form id="formDenuncia">
       <label for="nome">Seu nome (opcional)</label>
       <input type="text" id="nome" name="nome" placeholder="Digite seu nome, se quiser se identificar">
-
+      
+      <label for="contato">Contato (opcional)</label>
+<input type="text" id="contato" placeholder="Ex: WhatsApp, Instagram ou e-mail">
+      
       <label for="tipo">Tipo de situação</label>
       <select id="tipo" name="tipo" required>
         <option value="">Selecione uma opção</option>
@@ -251,6 +254,7 @@
       btnEnviar.textContent = "Enviando...";
 
       const nome = document.getElementById("nome").value.trim();
+      const contato = document.getElementById("contato").value.trim();
 const tipo = document.getElementById("tipo").value.trim();
 const tempo = document.getElementById("tempo").value.trim();
 const recorrencia = document.getElementById("recorrencia").value.trim();
