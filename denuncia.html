@@ -264,7 +264,7 @@ const link = document.getElementById("linkProva").value.trim();
       try {
       await addDoc(collection(db, "denuncias"), {
   nome: nome || "Não identificado",
-  contato
+  contato,
   tipo,
   tempo,
   recorrencia,
